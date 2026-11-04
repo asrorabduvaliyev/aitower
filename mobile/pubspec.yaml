@@ -1,0 +1,23 @@
+name: ai_smart_tourism
+description: AI Smart Tourism - O'zbekiston bo'ylab aqlli sayohat rejalashtirish
+publish_to: "none"
+version: 1.0.0+1
+environment:
+  sdk: ">=3.3.0 <4.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  collection: ^1.18.0
+  geolocator: ^13.0.1
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  shared_preferences: ^2.3.2
+  url_launcher: ^6.3.0
+dev_dependencies:
+  flutter_lints: ^6.0.0
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/attractions.json

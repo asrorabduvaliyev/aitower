@@ -1,88 +1,36 @@
-
 import random
-from .haversine import calculate_distance
 
+def genetic_tsp(dm, pop=80, gens=200, mut=0.25, seed=42):
+    """Genetik algoritm (TSP): 0-indeks boshlang'ich nuqta, qolganlari tartibi optimallanadi."""
+    n = len(dm)
+    if n <= 3:
+        return list(range(n))
+    rnd = random.Random(seed)
+    cost = lambda r: sum(dm[r[i]][r[i + 1]] for i in range(n - 1))
 
-def route_distance(route, start):
-    total = 0
-    lat, lon = start
+    def rand():
+        r = list(range(1, n)); rnd.shuffle(r); return [0] + r
 
-    for item in route:
-        total += calculate_distance(
-            lat, lon,
-            item["latitude"],
-            item["longitude"]
-        )
+    def pick(P):
+        return min(rnd.sample(P, min(3, len(P))), key=cost)
 
-        lat = item["latitude"]
-        lon = item["longitude"]
+    def crossover(a, b):  # Order crossover
+        i, j = sorted(rnd.sample(range(1, n), 2))
+        mid = a[i:j + 1]
+        rest = [g for g in b if g not in mid and g != 0]
+        return [0] + rest[:i - 1] + mid + rest[i - 1:]
 
-    return total
+    def mutate(r):
+        if rnd.random() < mut:
+            i, j = sorted(rnd.sample(range(1, n), 2))
+            r[i:j + 1] = reversed(r[i:j + 1])  # 2-opt
+        return r
 
-
-def genetic_algorithm(
-    attractions,
-    start,
-    population_size=40,
-    generations=100
-):
-    if len(attractions) <= 1:
-        return attractions
-
-    def fitness(route):
-        return route_distance(route, start)
-
-    population = []
-
-    for _ in range(population_size):
-        chromosome = attractions.copy()
-        random.shuffle(chromosome)
-        population.append(chromosome)
-
-    for generation in range(generations):
-
-        population.sort(key=fitness)
-
-        elite_count = max(2, population_size // 5)
-        new_population = population[:elite_count]
-
-        while len(new_population) < population_size:
-
-            parent1, parent2 = random.sample(
-                population[:elite_count], 2
-            )
-
-            n = len(parent1)
-            left, right = sorted(random.sample(range(n), 2))
-
-            child = [None] * n
-            child[left:right] = parent1[left:right]
-
-            remaining = [
-                x for x in parent2 if x not in child
-            ]
-
-            j = 0
-
-            for i in range(n):
-                if child[i] is None:
-                    child[i] = remaining[j]
-                    j += 1
-
-            # Mutatsiya
-            if random.random() < 0.2:
-                i, j = random.sample(range(n), 2)
-                child[i], child[j] = child[j], child[i]
-
-            new_population.append(child)
-
-        population = new_population
-
-    best_route = min(population, key=fitness)
-
-    return {
-        "route": best_route,
-        "distance_km": round(
-            route_distance(best_route, start), 2
-        )
-    }
+    P = [rand() for _ in range(pop)]
+    for _ in range(gens):
+        P.sort(key=cost)
+        nxt = P[:2]
+        while len(nxt) < pop:
+            nxt.append(mutate(crossover(pick(P), pick(P))))
+        P = nxt
+    return min(P, key=cost)
