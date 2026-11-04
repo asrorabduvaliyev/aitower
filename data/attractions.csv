@@ -1,0 +1,28 @@
+name,city,category,tags,lat,lon,rating,visit_minutes,cost_usd,description
+Chorsu bozori,Toshkent,bozor,"bozor,taom,foto",41.3265,69.2347,4.5,90,10,Non va quruq mevalar
+Xast Imom majmuasi,Toshkent,tarix,"tarix,foto",41.3356,69.2400,4.6,60,3,Usmon Qur'oni saqlanadigan joy
+Amir Temur xiyoboni,Toshkent,shahar,"foto,tarix",41.3111,69.2797,4.4,45,0,Shahar markazida sayr
+Toshkent teleminorasi,Toshkent,shahar,"foto,tabiat",41.3416,69.2849,4.3,60,6,Shahar panoramasi
+Milliy plov markazi,Toshkent,taom,taom,41.3490,69.3190,4.5,60,12,Toshkent plovi
+Yodgorlik ipak fabrikasi,Farg'ona vodiysi,hunar,"hunar,tarix",40.4670,71.7240,4.6,90,6,Ipak to'qish jarayoni
+Rishton kulolchiligi,Farg'ona vodiysi,hunar,hunar,40.3573,71.2850,4.7,90,8,Sopol yasash ustaxonasi
+Xudoyorxon o'rdasi,Farg'ona vodiysi,tarix,"tarix,foto",40.5290,70.9420,4.4,60,4,Qo'qon xonligi saroyi
+Registon maydoni,Samarqand,tarix,"tarix,foto",39.6548,66.9757,4.9,90,8,Uch madrasa
+Go'ri Amir maqbarasi,Samarqand,tarix,"tarix,foto",39.6483,66.9689,4.8,60,5,Amir Temur maqbarasi
+Shohizinda majmuasi,Samarqand,tarix,"tarix,foto",39.6637,66.9895,4.8,75,5,Feruza ranglarga to'la ko'cha
+Bibixonim masjidi,Samarqand,tarix,tarix,39.6612,66.9791,4.6,45,5,Temur davri masjidi
+Siyob bozori,Samarqand,bozor,"bozor,taom",39.6620,66.9810,4.5,60,8,Samarqand noni
+Ulug'bek rasadxonasi,Samarqand,tarix,tarix,39.6769,66.9964,4.5,60,4,O'rta asr rasadxonasi
+Konigil qog'oz ustaxonasi,Samarqand,hunar,hunar,39.6370,66.9150,4.4,60,6,Ipak qog'oz yasash
+Poi Kalon majmuasi,Buxoro,tarix,"tarix,foto",39.7753,64.4142,4.9,75,6,Kalon minorasi
+Ark qal'asi,Buxoro,tarix,tarix,39.7766,64.4115,4.6,60,5,Hukmdorlar qarorgohi
+Labi Hovuz,Buxoro,taom,"taom,foto",39.7745,64.4217,4.7,75,10,Hovuz bo'yida ovqat
+Chor Minor,Buxoro,tarix,"foto,tarix",39.7783,64.4261,4.4,30,3,To'rt minorali bino
+Savdo gumbazlari,Buxoro,bozor,"bozor,hunar",39.7742,64.4167,4.5,75,10,Zardo'zi va gilamlar
+Sitorai Mohi Xosa,Buxoro,tarix,tarix,39.8010,64.3960,4.3,60,5,Amir yozgi saroyi
+Ichan Qala sayri,Xiva,tarix,"tarix,foto",41.3783,60.3589,4.9,180,10,Devor ichidagi eski shahar
+Kalta Minor,Xiva,tarix,foto,41.3786,60.3610,4.7,20,0,Feruza kafelli minora
+Juma masjidi,Xiva,tarix,tarix,41.3770,60.3590,4.6,45,3,Yog'och ustunli masjid
+Tosh Hovli saroyi,Xiva,tarix,tarix,41.3775,60.3617,4.5,60,4,Xon saroyi
+Islom Xo'ja minorasi,Xiva,tarix,"foto,tarix",41.3790,60.3625,4.6,40,3,Shahar panoramasi
+Hunarmandlar ko'chasi,Xiva,hunar,"hunar,bozor",41.3780,60.3600,4.4,60,8,Yog'och o'ymakorligi

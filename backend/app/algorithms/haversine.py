@@ -1,26 +1,17 @@
+from math import radians, sin, cos, asin, sqrt
 
-import math
+R_KM = 6371.0088
 
-def calculate_distance(lat1, lon1, lat2, lon2):
-    """
-    Ikki geografik koordinata orasidagi masofani km da hisoblaydi.
-    Haversine formulasi.
-    """
-    R = 6371.0088
+def haversine_km(a, b):
+    """a, b = (lat, lon) gradusda. Ikki nuqta orasidagi katta doira masofasi (km)."""
+    la1, lo1, la2, lo2 = map(radians, (a[0], a[1], b[0], b[1]))
+    h = sin((la2 - la1) / 2) ** 2 + cos(la1) * cos(la2) * sin((lo2 - lo1) / 2) ** 2
+    return 2 * R_KM * asin(sqrt(h))
 
-    lat1 = math.radians(lat1)
-    lat2 = math.radians(lat2)
-
-    dlat = lat2 - lat1
-    dlon = math.radians(lon2 - lon1)
-
-    a = (
-        math.sin(dlat / 2) ** 2
-        + math.cos(lat1)
-        * math.cos(lat2)
-        * math.sin(dlon / 2) ** 2
-    )
-
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1 - a))
-
-    return R * c
+def distance_matrix(coords):
+    n = len(coords)
+    m = [[0.0] * n for _ in range(n)]
+    for i in range(n):
+        for j in range(i + 1, n):
+            m[i][j] = m[j][i] = haversine_km(coords[i], coords[j])
+    return m

@@ -1,85 +1,35 @@
-
+import csv
 from fastapi import FastAPI
-from pydantic import BaseModel
-from typing import List
+from fastapi.middleware.cors import CORSMiddleware
+from .config import CSV_PATH
+from .database import Base, engine, SessionLocal
+from .models import Attraction
+from .routers import attractions, recommendations, routes
 
-from algorithms.content_filtering import recommend_attractions
-from algorithms.optimizer import generate_optimal_route
+Base.metadata.create_all(bind=engine)
 
-app = FastAPI(
-    title="AI Smart Tourism",
-    description="Qashqadaryo turistik marshrut tizimi",
-    version="1.0"
-)
+def seed():
+    db = SessionLocal()
+    try:
+        if db.query(Attraction).count():
+            return
+        with open(CSV_PATH, encoding="utf-8") as f:
+            for r in csv.DictReader(f):
+                db.add(Attraction(name=r["name"], city=r["city"], category=r["category"], tags=r["tags"],
+                                  lat=float(r["lat"]), lon=float(r["lon"]), rating=float(r["rating"]),
+                                  visit_minutes=int(r["visit_minutes"]), cost_usd=float(r["cost_usd"]),
+                                  description=r["description"]))
+        db.commit()
+    finally:
+        db.close()
 
-# Dastlabki sinov uchun ma'lumotlar.
-# Keyinchalik PostgreSQL/PostGIS bilan almashtiriladi.
-
-attractions = []
-
-
-class TouristRequest(BaseModel):
-    latitude: float
-    longitude: float
-    interests: List[str] = []
-    max_distance: float = 100
-
+seed()
+app = FastAPI(title="AI Smart Tourism API")
+app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_methods=["*"], allow_headers=["*"])
+app.include_router(attractions.router)
+app.include_router(recommendations.router)
+app.include_router(routes.router)
 
 @app.get("/")
-def home():
-    return {
-        "message": "AI Smart Tourism API ishlamoqda"
-    }
-
-
-@app.get("/health")
 def health():
-    return {
-        "status": "online"
-    }
-
-
-@app.get("/attractions")
-def get_attractions():
-    return attractions
-
-
-@app.post("/attractions")
-def add_attraction(data: dict):
-    data["id"] = len(attractions) + 1
-    attractions.append(data)
-
-    return {
-        "message": "Obyekt qo'shildi",
-        "data": data
-    }
-
-
-@app.post("/recommend")
-def recommend(request: TouristRequest):
-
-    result = recommend_attractions(
-        attractions,
-        request.latitude,
-        request.longitude,
-        request.interests,
-        request.max_distance
-    )
-
-    return {
-        "recommendations": result
-    }
-
-
-@app.post("/optimal-route")
-def optimal_route(request: TouristRequest):
-
-    result = generate_optimal_route(
-        attractions,
-        request.latitude,
-        request.longitude,
-        request.interests,
-        request.max_distance
-    )
-
-    return result
+    return {"status": "ok"}
